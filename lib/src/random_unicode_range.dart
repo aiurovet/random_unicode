@@ -7,23 +7,24 @@ import 'package:random_unicode/random_unicode.dart';
 /// Class for the pair of lower and upper boundaries
 ///
 class RandomUnicodeRange {
-  /// Lower boundary character code
+  /// Lowest character code
   ///
-  late final int lower;
+  late final int min;
 
-  /// Upper boundary character code
+  /// Highest character code
   ///
-  late final int upper;
+  late final int max;
 
   /// The constructor
   ///
-  RandomUnicodeRange([lower = Lim.minCharCode, upper = Lim.maxCharCode]) {
-    this.lower = (lower >= Lim.minCharCode ? lower : Lim.minCharCode);
-    this.upper = (upper <= Lim.maxCharCode ? upper : Lim.maxCharCode);
+  RandomUnicodeRange([int min = Lim.minCharCode, int? max]) {
+    this.min = (min >= Lim.minCharCode ? min : Lim.minCharCode);
+    max ??= min;
+    this.max = (max <= Lim.maxCharCode ? max : Lim.maxCharCode);
   }
 
   /// Next char code generator
   ///
   int nextCharCode(RandomUnicodeNextIntProc nextIntProc) =>
-      lower >= upper ? lower : lower + nextIntProc(upper - lower);
+      min >= max ? min : min + nextIntProc(max - min);
 }
