@@ -5,21 +5,20 @@ void main() {
   group('RandomUnicode -', () {
     test('add', () {
       final u = RandomUnicode()
-        ..add(included: RandomUnicodeRange(0x20, 0x7F))
-        ..add(included: RandomUnicodeRange(0x80, 0x81))
-        ..add(charCode: 0x30)
-        ..add(excluded: RandomUnicodeRange(0x22, 0x24));
-      expect(u.included.length, 3);
-      expect(u.excluded.length, 1);
-
-      print(u.string(10));
+        ..addIncluded(lower: 0x20, upper: 0x7F)
+        ..addIncluded(lower: 0x80, upper: 0x81)
+        ..addExcluded(charCodes: [0x22, 0x24, 0x30]);
+      expect(u.included.length, 2);
+      expect(u.excluded.length, 3);
     });
     test('string: empty', () {
-      final u = RandomUnicode(included: [RandomUnicodeRange(0x20, 0x7F)]);
+      final u = RandomUnicode()
+        .. addIncluded(lower: 0x20, upper: 0x7F);
       expect(u.string(0).length, 0);
     });
     test('string: length between 10 and 20', () {
-      final u = RandomUnicode(included: [RandomUnicodeRange(0x20, 0x7F)]);
+      final u = RandomUnicode()
+        .. addIncluded(lower: 0x20, upper: 0x7F);
       final s = u.string(10, 20);
       expect((s.length >= 10) && (s.length <= 20), true);
     });

@@ -2,6 +2,7 @@
 // All rights reserved under MIT license (see LICENSE file)
 
 import 'dart:math';
+import 'package:lim/lim.dart';
 import 'package:random_unicode/random_unicode.dart';
 
 /// Type for a callback procedure providing with
@@ -31,23 +32,7 @@ class RandomUnicode {
 
   /// The constructor
   ///
-  RandomUnicode(
-      {List<int>? charCodes,
-      List<RandomUnicodeRange>? excluded,
-      List<RandomUnicodeRange>? included,
-      RandomUnicodeNextIntProc? nextIntProc,
-      int? seed}) {
-    if (excluded != null) {
-      this.excluded.addAll(excluded);
-    }
-    if (included != null) {
-      this.included.addAll(included);
-    }
-    if (charCodes != null) {
-      for (var i = 0, n = charCodes.length; i < n; i++) {
-        this.included.add(RandomUnicodeRange(charCodes[i]));
-      }
-    }
+  RandomUnicode({RandomUnicodeNextIntProc? nextIntProc, int? seed}) {
     if (nextIntProc != null) {
       this.nextIntProc = nextIntProc;
     } else if (seed != null) {
@@ -57,44 +42,79 @@ class RandomUnicode {
     }
   }
 
-  /// Check whether a given Unicode character is within
-  /// the include range, but not within the exclude range
+  /// Add a set of characters to included or excluded list:
+  /// either as a proper range or as char code(s) converted
+  /// to the list of the trivial ranges
   ///
   void add(
-      {int? charCode,
-      RandomUnicodeRange? excluded,
-      RandomUnicodeRange? included}) {
-    if (excluded != null) {
-      this.excluded.add(excluded);
+      {bool isIncluded = false,
+      int? lower,
+      int? upper,
+      RandomUnicodeRange? range,
+      List<int>? charCodes}) {
+    final to = (isIncluded ? included : excluded);
+
+    if ((lower != null) || (upper != null)) {
+      to.add(RandomUnicodeRange(lower, upper));
     }
-    if (included != null) {
-      this.included.add(included);
+    if (range != null) {
+      to.add(range);
     }
-    if (charCode != null) {
-      this.included.add(RandomUnicodeRange(charCode));
+    if (charCodes != null) {
+      for (var charCode in charCodes) {
+        to.add(RandomUnicodeRange(charCode, charCode));
+      }
     }
   }
 
+  /// A wrapper for add(isIncluded: true, ...)
+  ///
+  void addIncluded(
+          {int? lower,
+          int? upper,
+          RandomUnicodeRange? range,
+          List<int>? charCodes}) =>
+      add(
+          isIncluded: true,
+          lower: lower,
+          upper: upper,
+          range: range,
+          charCodes: charCodes);
+
+  /// A wrapper for add(isIncluded: false, ...)
+  ///
+  void addExcluded(
+          {int? lower,
+          int? upper,
+          RandomUnicodeRange? range,
+          List<int>? charCodes}) =>
+      add(
+          isIncluded: false,
+          lower: lower,
+          upper: upper,
+          range: range,
+          charCodes: charCodes);
+
   /// Generate random string
   ///
-  String string(int minLen, [int maxLen = -1]) {
-    int strLen = minLen;
+  String string(int minLen, [int? maxLen]) {
+    var strLen = minLen;
 
-    if (maxLen > minLen) {
+    if ((maxLen != null) && (maxLen > minLen)) {
       strLen += nextIntProc(maxLen - minLen);
     }
 
-    final incLen = included.length;
-    var buffer = StringBuffer();
+    final buffer = StringBuffer();
     int charCode;
-    final defRangeOffset = RandomUnicodeRange.minLower;
-    final defRangeLength = RandomUnicodeRange.maxUpper - defRangeOffset;
-    var hasExcluded = excluded.isNotEmpty;
+    final defRangeOffset = Lim.minCharCode;
+    final defRangeLength = Lim.maxCharCode - defRangeOffset;
+    final hasExcluded = excluded.isNotEmpty;
+    final includedCount = included.length;
 
     for (var i = 0; i < strLen; i++) {
       do {
-        if (incLen > 0) {
-          var range = included[nextIntProc(incLen)];
+        if (includedCount > 0) {
+          var range = included[nextIntProc(includedCount)];
           charCode = range.nextCharCode(nextIntProc);
         } else {
           charCode = defRangeOffset + nextIntProc(defRangeLength);

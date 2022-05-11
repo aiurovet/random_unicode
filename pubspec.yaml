@@ -1,5 +1,5 @@
 name: random_unicode
-description: A starting point for Dart libraries or applications.
+description: A library to generate random Unicode strings within the given range(s).
 version: 0.1.0
 homepage: https://github.com/aiurovet/random_unicode/
 
@@ -9,3 +9,5 @@ environment:
 dev_dependencies:
   lints: ^1.0.0
   test: ^1.16.0
+dependencies: 
+  lim: ^0.1.2
