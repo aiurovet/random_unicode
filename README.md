@@ -4,9 +4,9 @@ A library to generate random Unicode strings within the given range(s)
 
 - Generates an arbitrary Unicode string
 - Allows to limit destination to a certain list of character ranges
-- Contains helper constriuctors for ASCII characters, ASCII alpha, ASCII alphanumeric,
-  numeric (decimal), hexadecimal, BMP (basic multilingual plane) and valid filename (when
-  several characters are excluded to avoid issues under Windows)
+- Contains helper constructors for ASCII characters, ASCII alpha, ASCII alphanumeric,
+  numeric (decimal), hexadecimal, BMP (basic multilingual plane) and valid filename
+  (when several characters are excluded to avoid issues under Windows)
 
 ## Usage
 
