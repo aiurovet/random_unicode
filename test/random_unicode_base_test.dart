@@ -53,7 +53,8 @@ void main() {
     });
     test('string - BMP', () {
       final s = RandomUnicode.bmp().string(300);
-      expect(s.replaceAll(RegExp(r'[\u0000-\uFFFF]*', unicode: true), '').length, 0);
+      final r = RegExp(r'[\u0000-\uFFFF]*', unicode: true);
+      expect(s.replaceAll(r, '').length, 0);
     });
     test('string - valid file name - lax', () {
       final s = RandomUnicode.validFileName().string(100);
