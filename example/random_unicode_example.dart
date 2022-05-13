@@ -19,7 +19,7 @@ void main(List<String> args) {
     ..addIncluded(min: 0x20, max: 0x7F)
     ..addIncluded(min: 0x100, max: 0x200)
     ..addIncluded(min: 0x1000, max: 0x2000)
-    ..addExcluded(charCodes: r'BEZbez'.codeUnits);
+    ..addExcluded(list: r'BEZbez'.codeUnits);
 
   // Generating the string
   //
