@@ -118,30 +118,14 @@ class RandomUnicode {
   /// A wrapper for add(isIncluded: true, ...)
   ///
   void addIncluded(
-          {int? min,
-          int? max,
-          List<int>? list,
-          RandomUnicodeRange? range}) =>
-      add(
-          isIncluded: true,
-          min: min,
-          max: max,
-          list: list,
-          range: range);
+          {int? min, int? max, List<int>? list, RandomUnicodeRange? range}) =>
+      add(isIncluded: true, min: min, max: max, list: list, range: range);
 
   /// A wrapper for add(isIncluded: false, ...)
   ///
   void addExcluded(
-          {int? min,
-          int? max,
-          List<int>? list,
-          RandomUnicodeRange? range}) =>
-      add(
-          isIncluded: false,
-          min: min,
-          max: max,
-          list: list,
-          range: range);
+          {int? min, int? max, List<int>? list, RandomUnicodeRange? range}) =>
+      add(isIncluded: false, min: min, max: max, list: list, range: range);
 
   /// Generate random string of a given length or
   /// or of a random length within the length ramge
