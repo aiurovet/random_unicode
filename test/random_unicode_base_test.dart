@@ -12,9 +12,9 @@ void main() {
       final u = RandomUnicode()
         ..addIncluded(min: 0x20, max: 0x7F)
         ..addIncluded(min: 0x80, max: 0x81)
-        ..addExcluded(charCodes: [0x22, 0x24, 0x30]);
+        ..addExcluded(list: [0x22, 0x24, 0x30]);
       expect(u.included.length, 2);
-      expect(u.excluded.length, 3);
+      expect(u.excluded.length, 1);
     });
     test('string - empty', () {
       final u = RandomUnicode()..addIncluded(min: 0x20, max: 0x7F);

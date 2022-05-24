@@ -1,6 +1,6 @@
 name: random_unicode
 description: A library to generate random Unicode strings within the given range(s).
-version: 0.1.2
+version: 0.2.1
 homepage: https://aiurovet.blogspot.com/
 repository: https://github.com/aiurovet/random_unicode/
 
