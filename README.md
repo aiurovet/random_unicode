@@ -10,7 +10,7 @@ A library to generate random Unicode strings within the given range(s)
 
 ## Usage
 
-The working example which can also be found in the repository in `example/perf_test_example.dart`
+The working example which can also be found in the repository in `example/random_unicode_example.dart`
 
 ```dart
 import 'package:random_unicode/random_unicode.dart';
