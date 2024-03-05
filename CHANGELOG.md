@@ -1,3 +1,7 @@
+## 0.2.4
+
+- Upgraded lim package
+
 ## 0.2.3
 
 - Upgraded packages
